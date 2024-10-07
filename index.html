@@ -10,10 +10,14 @@
             max-width: 300px;
             margin: 0 auto;
             padding: 10px;
-            background-color: #f0f0f0;
+            background-color: #191919;
+            color:rgb(168, 168, 168)
+        }
+        h2 {
+            color:white
         }
         .holiday {
-            background-color: white;
+            background-color: #262626;
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 10px;
@@ -31,7 +35,7 @@
         .countdown {
             font-size: 1.2em;
             font-weight: bold;
-            color: #007bff;
+            color: rgb(230, 230, 230);
         }
     </style>
 </head>
@@ -40,10 +44,12 @@
 
     <script>
         const holidays = [
-            { name: "New Year's Day", month: 1, day: 1, image: "https://example.com/newyear.jpg" },
-            { name: "Valentine's Day", month: 2, day: 14, image: "https://example.com/valentine.jpg" },
-            { name: "Halloween", month: 10, day: 31, image: "https://example.com/halloween.jpg" },
-            { name: "Christmas", month: 12, day: 25, image: "https://example.com/christmas.jpg" },
+            { name: "New Year's Day", month: 1, day: 1 },
+            { name: "Valentine's Day", month: 2, day: 14 },
+            { name: "Canadian Thanksgiving", month: 10, day: 14 },
+            { name: "Halloween", month: 10, day: 31 },
+            { name: "American Thanksgiving", month: 11, day: 28 },
+            { name: "Christmas", month: 12, day: 25 },
             // Add more holidays here
         ];
 
@@ -70,9 +76,8 @@
                 const daysUntil = Math.ceil((holiday.nextDate - now) / (1000 * 60 * 60 * 24));
                 return `
                     <div class="holiday">
-                        <img src="${holiday.image}" alt="${holiday.name}">
                         <h2>${holiday.name}</h2>
-                        <div class="countdown">${daysUntil} days until ${holiday.name}</div>
+                        <div class="countdown">${daysUntil} days until</div>
                         <div>${holiday.nextDate.toDateString()}</div>
                     </div>
                 `;
