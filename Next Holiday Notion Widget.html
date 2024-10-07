@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annual Holiday Countdown Widget</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .holiday {
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .holiday img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .holiday h2 {
+            margin: 10px 0 5px;
+        }
+        .countdown {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div id="holidayWidget"></div>
+
+    <script>
+        const holidays = [
+            { name: "New Year's Day", month: 1, day: 1, image: "https://example.com/newyear.jpg" },
+            { name: "Valentine's Day", month: 2, day: 14, image: "https://example.com/valentine.jpg" },
+            { name: "Halloween", month: 10, day: 31, image: "https://example.com/halloween.jpg" },
+            { name: "Christmas", month: 12, day: 25, image: "https://example.com/christmas.jpg" },
+            // Add more holidays here
+        ];
+
+        function getNextOccurrence(month, day) {
+            const now = new Date();
+            let nextOccurrence = new Date(now.getFullYear(), month - 1, day);
+            if (nextOccurrence <= now) {
+                nextOccurrence.setFullYear(nextOccurrence.getFullYear() + 1);
+            }
+            return nextOccurrence;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const upcomingHolidays = holidays
+                .map(holiday => ({
+                    ...holiday,
+                    nextDate: getNextOccurrence(holiday.month, holiday.day)
+                }))
+                .sort((a, b) => a.nextDate - b.nextDate)
+                .slice(0, 2);
+
+            const widgetHTML = upcomingHolidays.map(holiday => {
+                const daysUntil = Math.ceil((holiday.nextDate - now) / (1000 * 60 * 60 * 24));
+                return `
+                    <div class="holiday">
+                        <img src="${holiday.image}" alt="${holiday.name}">
+                        <h2>${holiday.name}</h2>
+                        <div class="countdown">${daysUntil} days until ${holiday.name}</div>
+                        <div>${holiday.nextDate.toDateString()}</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('holidayWidget').innerHTML = widgetHTML;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 86400000); // Update once a day
+    </script>
+</body>
+</html>
